@@ -1,0 +1,139 @@
+/* Base Layout */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 20px; 
+    background: #0d0d0d; /* Deep black */
+    padding: 20px; 
+    color: #f5f5f5; /* Light text for contrast */
+}
+
+/* Container Box */
+.container { 
+    background: #1a1a1a; 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin: auto; 
+    max-width: 420px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); /* subtle gold glow */
+}
+
+/* Headings */
+h2 { 
+    text-align: left; 
+    color: #ffd700; /* Golden headings */
+    font-weight: 600;
+}
+
+/* Labels */
+label { 
+    display: block; 
+    margin-top: 12px; 
+    max-width: 250px;
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* Inputs */
+input { 
+    width: 100%; 
+    padding: 10px; 
+    margin-top: 6px; 
+    border-radius: 6px;
+    border: 1px solid #333;
+    background: #111;
+    color: #ffd700;
+    outline: none;
+    transition: all 0.2s;
+}
+input:focus {
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* Buttons */
+button { 
+    background: linear-gradient(135deg, #222, #000); 
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 12px 18px;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+button:hover { 
+    background: #ffd700;
+    color: #000; 
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
+    transform: scale(1.05);
+}
+
+/* Records */
+#records { 
+    margin-top: 20px; 
+}
+
+.record { 
+    background: #111; 
+    padding: 12px; 
+    border-radius: 8px; 
+    margin: 6px 0; 
+    border: 1px solid #333;
+    transition: all 0.3s ease;
+}
+.record:hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Tabs */
+.tab {
+    overflow: hidden;
+    border: none;
+    background: #111;
+    max-width: 420px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+/* Tab Buttons */
+.tab button {
+    flex: 1;
+    background: #1a1a1a;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    color: #ccc;
+    cursor: pointer;
+    padding: 12px;
+    transition: 0.3s;
+    font-weight: 500;
+}
+.tab button:hover {
+    background-color: #222;
+    color: #ffd700;
+}
+.tab button.active { 
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    color: #000; 
+    font-weight: bold;
+}
+
+/* Tab Content */
+.tabcontent {
+    display: none;
+    padding: 12px;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #1a1a1a;
+    animation: fadeEffect 0.8s;
+    margin-top: 10px;
+}
+
+/* Fade animation */
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
