@@ -1,139 +1,119 @@
-/* Base Layout */
-body { 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    margin: 20px; 
-    background: #0d0d0d; /* Deep black */
-    padding: 20px; 
-    color: #f5f5f5; /* Light text for contrast */
+:root{
+  --bg: #0f1115;
+  --panel: #151922;
+  --panel-2: #1b2030;
+  --text: #e9edf1;
+  --muted: #95a1b2;
+  --primary: #6aa3ff;
+  --primary-2:#3c7dff;
+  --border: #2a3244;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 16px;
 }
 
-/* Container Box */
-.container { 
-    background: #1a1a1a; 
-    padding: 20px; 
-    border-radius: 12px; 
-    margin: auto; 
-    max-width: 420px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); /* subtle gold glow */
-}
-
-/* Headings */
-h2 { 
-    text-align: left; 
-    color: #ffd700; /* Golden headings */
-    font-weight: 600;
-}
-
-/* Labels */
-label { 
-    display: block; 
-    margin-top: 12px; 
-    max-width: 250px;
-    color: #ccc;
-    font-size: 14px;
-}
-
-/* Inputs */
-input { 
-    width: 100%; 
-    padding: 10px; 
-    margin-top: 6px; 
-    border-radius: 6px;
-    border: 1px solid #333;
-    background: #111;
-    color: #ffd700;
-    outline: none;
-    transition: all 0.2s;
-}
-input:focus {
-    border-color: #ffd700;
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
-
-/* Buttons */
-button { 
-    background: linear-gradient(135deg, #222, #000); 
-    color: #ffd700;
-    border: 1px solid #ffd700;
-    border-radius: 8px;
-    cursor: pointer;
-    padding: 12px 18px;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-}
-button:hover { 
-    background: #ffd700;
-    color: #000; 
-    box-shadow: 0 0 12px rgba(255, 215, 0, 0.8);
-    transform: scale(1.05);
-}
-
-/* Records */
-#records { 
-    margin-top: 20px; 
-}
-
-.record { 
-    background: #111; 
-    padding: 12px; 
-    border-radius: 8px; 
-    margin: 6px 0; 
-    border: 1px solid #333;
-    transition: all 0.3s ease;
-}
-.record:hover {
-    border-color: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  color:var(--text);
+  background:linear-gradient(180deg,#0d0f14,#0f1115);
 }
 
 /* Tabs */
-.tab {
-    overflow: hidden;
-    border: none;
-    background: #111;
-    max-width: 420px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+.tab{
+  display:flex;
+  gap:10px;
+  padding:16px;
+}
+.tablinks{
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--border);
+  padding:10px 14px;
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.tablinks:hover{transform:translateY(-1px)}
+.tablinks.active{
+  background:linear-gradient(180deg,var(--primary),var(--primary-2));
+  color:#0b1020;
+  border-color:transparent;
 }
 
-/* Tab Buttons */
-.tab button {
-    flex: 1;
-    background: #1a1a1a;
-    border: none;
-    outline: none;
-    border-radius: 0;
-    color: #ccc;
-    cursor: pointer;
-    padding: 12px;
-    transition: 0.3s;
-    font-weight: 500;
-}
-.tab button:hover {
-    background-color: #222;
-    color: #ffd700;
-}
-.tab button.active { 
-    background: linear-gradient(135deg, #ffd700, #b8860b);
-    color: #000; 
-    font-weight: bold;
+.tabcontent{display:none;padding:16px}
+
+/* Containers */
+.container{
+  max-width:520px;
+  margin:auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
 }
 
-/* Tab Content */
-.tabcontent {
-    display: none;
-    padding: 12px;
-    border: 1px solid #333;
-    border-radius: 8px;
-    background: #1a1a1a;
-    animation: fadeEffect 0.8s;
-    margin-top: 10px;
+/* Inputs */
+label{display:block;margin-top:10px;margin-bottom:6px;color:var(--muted)}
+input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#0e1220;
+  color:var(--text);
 }
 
-/* Fade animation */
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
+.input{
+  width:100%;
+}
+
+.input-group{
+  display:flex;
+  gap:10px;
+}
+.input-group input{
+  flex:1;
+}
+
+/* Buttons */
+.btn-row{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
+}
+.btn{
+  padding:10px 14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.btn:hover{opacity:.95; transform:translateY(-1px)}
+.btn.primary{
+  background:linear-gradient(180deg,var(--primary),var(--primary-2));
+  color:#0b1020;
+}
+.btn.subtle{
+  background:#1b2030;
+  color:var(--text);
+}
+
+.file-label input{
+  margin-top:8px;
+}
+
+/* Records */
+#recordsList .record,
+#calcRecordsList .record{
+  margin-top:10px;
+  background:#0e1220;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  cursor:pointer;
+}
+#recordsList .record:hover{
+  background:rgba(255,255,255,.05);
 }
