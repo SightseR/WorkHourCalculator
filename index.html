@@ -35,7 +35,6 @@
         <input class="input" type="number" id="allocHours" min="0" step="1" placeholder="Hours">
         <input class="input" type="number" id="allocMinutes" min="0" max="59" step="1" placeholder="Minutes">
       </div>
-      <!-- hidden decimal value -->
       <input type="hidden" id="allocated" value="0">
 
       <!-- Cargo late time -->
@@ -44,7 +43,6 @@
         <input class="input" type="number" id="cargoHours" min="0" step="1" placeholder="Hours">
         <input class="input" type="number" id="cargoMinutes" min="0" max="59" step="1" placeholder="Minutes">
       </div>
-      <!-- hidden decimal value -->
       <input type="hidden" id="cargoLate" value="0">
 
       <p><strong>Worked Hrs:</strong> <span id="worked">0.00</span></p>
@@ -80,6 +78,21 @@
 
       <label>End Date:</label>
       <input type="date" id="endWeekDate">
+
+      <!-- ✅ SETTINGS -->
+      <h3 style="margin-top:18px;">Settings</h3>
+
+      <label>Hourly rate (€):</label>
+      <input type="number" id="hourlyRate" step="0.01" value="11.21">
+
+      <label>Overtime multiplier:</label>
+      <input type="number" id="overtimeMultiplier" step="0.01" value="1.20">
+
+      <label>Night pay per hour (€):</label>
+      <input type="number" id="nightPayRate" step="0.01" value="1.28">
+
+      <!-- ✅ RESULTS -->
+      <h3 style="margin-top:18px;">Results</h3>
 
       <p><strong>Work hours:</strong> <span id="workedHours">0.00</span></p>
       <p><strong>Worked Hours pay:</strong> <span id="workPay">0.00</span></p>
