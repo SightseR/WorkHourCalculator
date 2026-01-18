@@ -1,31 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Work Time Tracker</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="tab">
     <button class="tablinks" onclick="openTab(event, 'EnterDailyHours')" id="defaultOpen">Enter</button>
     <button class="tablinks" onclick="openTab(event, 'CalculateWeeklyHours')">Calculate</button>
   </div>
 
-  <!-- TabContent1 -->
+  <!-- ==========================
+       TAB 1: ENTER DAILY HOURS
+  =========================== -->
   <div id="EnterDailyHours" class="tabcontent">
     <div class="container">
       <h2>Work Time Tracker</h2>
-      <label>Date: <input type="date" id="date"></label>
-      <label>Start Time: <input type="time" id="start"></label>
-      <label>End Time: <input type="time" id="end"></label>
-      <label>Allocated Time (hrs): <input type="number" id="allocated" min="0" step="0.25" placeholder="e.g., 8"></label>
 
-      <p><strong>Worked Hrs: </strong> <span id="worked">0.00</span></p>
+      <label>Date:</label>
+      <input type="date" id="date">
+
+      <label>Start Time:</label>
+      <input type="time" id="start">
+
+      <label>End Time:</label>
+      <input type="time" id="end">
+
+      <!-- Allocated time -->
+      <label>Allocated Time:</label>
+      <div class="input-group">
+        <input class="input" type="number" id="allocHours" min="0" step="1" placeholder="Hours">
+        <input class="input" type="number" id="allocMinutes" min="0" max="59" step="1" placeholder="Minutes">
+      </div>
+      <!-- hidden decimal value -->
+      <input type="hidden" id="allocated" value="0">
+
+      <!-- Cargo late time -->
+      <label>Cargo Late Time:</label>
+      <div class="input-group">
+        <input class="input" type="number" id="cargoHours" min="0" step="1" placeholder="Hours">
+        <input class="input" type="number" id="cargoMinutes" min="0" max="59" step="1" placeholder="Minutes">
+      </div>
+      <!-- hidden decimal value -->
+      <input type="hidden" id="cargoLate" value="0">
+
+      <p><strong>Worked Hrs:</strong> <span id="worked">0.00</span></p>
       <p><strong>Balance Hrs:</strong> <span id="balance">0.00</span></p>
 
-      <button onclick="saveRecord()">Save Record</button>
-      <button onclick="downloadFile()">Download Records</button>
-      <label>Upload Records File: <input type="file" id="fileInput" onchange="loadFile(event)"></label>
+      <div class="btn-row">
+        <button class="btn primary" onclick="saveRecord()">Save Record</button>
+        <button class="btn subtle" onclick="downloadFile()">Download Records</button>
+        <button class="btn danger" onclick="clearLocalRecords()">Clear Saved Records</button>
+      </div>
+
+      <label class="file-label">
+        Upload Records File:
+        <input type="file" id="fileInput" onchange="loadFile(event)">
+      </label>
 
       <div id="records" style="margin-top:12px;">
         <h3>Past Records</h3>
@@ -33,23 +67,34 @@
       </div>
     </div>
   </div>
-  
-  <!-- TabContent2 -->
+
+  <!-- ==========================
+       TAB 2: CALCULATE HOURS
+  =========================== -->
   <div id="CalculateWeeklyHours" class="tabcontent">
     <div class="container">
       <h2>Calculate work time</h2>
-      <label>Start Date: <input type="date" id="startWeekDate"></label>
-      <label>End Date: <input type="date" id="endWeekDate"></label>
+
+      <label>Start Date:</label>
+      <input type="date" id="startWeekDate">
+
+      <label>End Date:</label>
+      <input type="date" id="endWeekDate">
 
       <p><strong>Work hours:</strong> <span id="workedHours">0.00</span></p>
       <p><strong>Worked Hours pay:</strong> <span id="workPay">0.00</span></p>
+
       <p><strong>Worked Hours Overtime:</strong> <span id="overtTime">0.00</span></p>
       <p><strong>Overtime pay:</strong> <span id="overTimePay">0.00</span></p>
-      <p><strong>Night time pay:</strong> <span id="nightTimePay">0.00</span></p>
-      <p><strong>Total pay:</strong> <span id="totalPay">0.00</span></p>
-      
 
-      <button onclick="CalculateWorkTime()">Calculate</button>
+      <p><strong>Night time pay:</strong> <span id="nightTimePay">0.00</span></p>
+
+      <p><strong>Cargo late time:</strong> <span id="cargoLateTimeTotal">0.00</span></p>
+      <p><strong>Cargo late time pay:</strong> <span id="cargoLatePay">0.00</span></p>
+
+      <p><strong>Total pay:</strong> <span id="totalPay">0.00</span></p>
+
+      <button class="btn primary" onclick="CalculateWorkTime()">Calculate</button>
 
       <div id="calcRecords" style="margin-top:12px;">
         <h3>Past Records</h3>
