@@ -1,7 +1,8 @@
 let records = [];
 
-// ✅ localStorage key
+// localStorage keys
 const STORAGE_KEY = "work_time_tracker_records";
+const SETTINGS_KEY = "work_time_tracker_settings";
 
 /* =========================
    Helpers
@@ -45,13 +46,11 @@ function sortDedupeNormalizeDisplay() {
   dedupeByDateKeepLast();
   sortRecords();
   refreshLists();
-
-  // ✅ always save after updates
   saveToLocalStorage();
 }
 
 /* =========================
-   ✅ localStorage functions
+   Records localStorage
 ========================= */
 function saveToLocalStorage() {
   try {
@@ -84,7 +83,6 @@ function clearLocalRecords() {
   localStorage.removeItem(STORAGE_KEY);
   refreshLists();
 
-  // reset calculate tab totals
   document.getElementById("workedHours").innerText = "0.00";
   document.getElementById("workPay").innerText = "0.00";
   document.getElementById("overtTime").innerText = "0.00";
@@ -93,6 +91,43 @@ function clearLocalRecords() {
   document.getElementById("cargoLateTimeTotal").innerText = "0.00";
   document.getElementById("cargoLatePay").innerText = "0.00";
   document.getElementById("totalPay").innerText = "0.00";
+}
+
+/* =========================
+   Settings localStorage
+========================= */
+function saveSettingsToLocalStorage() {
+  const hourlyRate = parseFloat(document.getElementById("hourlyRate")?.value) || 0;
+  const overtimeMultiplier = parseFloat(document.getElementById("overtimeMultiplier")?.value) || 1;
+  const nightPayRate = parseFloat(document.getElementById("nightPayRate")?.value) || 0;
+
+  const settings = { hourlyRate, overtimeMultiplier, nightPayRate };
+
+  try {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  } catch (err) {
+    console.warn("Could not save settings to localStorage", err);
+  }
+}
+
+function loadSettingsFromLocalStorage() {
+  try {
+    const saved = localStorage.getItem(SETTINGS_KEY);
+    if (!saved) return;
+
+    const settings = JSON.parse(saved);
+
+    if (settings.hourlyRate != null)
+      document.getElementById("hourlyRate").value = settings.hourlyRate;
+
+    if (settings.overtimeMultiplier != null)
+      document.getElementById("overtimeMultiplier").value = settings.overtimeMultiplier;
+
+    if (settings.nightPayRate != null)
+      document.getElementById("nightPayRate").value = settings.nightPayRate;
+  } catch (err) {
+    console.warn("Could not load settings from localStorage", err);
+  }
 }
 
 /* =========================
@@ -156,6 +191,11 @@ document.getElementById("allocMinutes").addEventListener("input", updateAllocate
 document.getElementById("cargoHours").addEventListener("input", updateCargoDecimal);
 document.getElementById("cargoMinutes").addEventListener("input", updateCargoDecimal);
 
+// ✅ settings listeners
+document.getElementById("hourlyRate").addEventListener("input", saveSettingsToLocalStorage);
+document.getElementById("overtimeMultiplier").addEventListener("input", saveSettingsToLocalStorage);
+document.getElementById("nightPayRate").addEventListener("input", saveSettingsToLocalStorage);
+
 /* =========================
    Save / Load record into form
 ========================= */
@@ -199,7 +239,6 @@ function saveRecord() {
 
   const record = { date, start, end, worked, allocated, balance, cargoLate };
 
-  // overwrite same date
   records = records.filter(r => r.date !== date);
   records.push(record);
 
@@ -250,7 +289,7 @@ function loadFile(event) {
       if (!Array.isArray(loaded)) throw new Error("Not an array");
 
       records = loaded;
-      sortDedupeNormalizeDisplay(); // ✅ will auto save to localStorage too
+      sortDedupeNormalizeDisplay();
     } catch {
       alert("Invalid file format!");
     }
@@ -283,6 +322,12 @@ function CalculateWorkTime() {
   if (!startDate || !endDate) return alert("Please select start and end dates!");
   if (endDate < startDate) return alert("End Date must be on or after Start Date.");
 
+  const hourlyRate = parseFloat(document.getElementById("hourlyRate").value) || 0;
+  const overtimeMultiplier = parseFloat(document.getElementById("overtimeMultiplier").value) || 1;
+  const nightPayPerHour = parseFloat(document.getElementById("nightPayRate").value) || 0;
+
+  saveSettingsToLocalStorage();
+
   let totalWorked = 0, totalOvertime = 0, totalCargoLate = 0;
 
   for (const r of records) {
@@ -295,14 +340,9 @@ function CalculateWorkTime() {
 
   const normalHours = totalWorked - totalOvertime;
 
-  const hourlyRate = 11.21;
-  const overtimeRate = hourlyRate * 1.2;
-  const nightPayPerHour = 1.28;
-
   const workPay = normalHours * hourlyRate;
-  const overTimePay = totalOvertime * overtimeRate;
+  const overTimePay = totalOvertime * hourlyRate * overtimeMultiplier;
   const nightTimePay = normalHours * nightPayPerHour;
-
   const cargoLatePay = totalCargoLate * hourlyRate;
 
   const totalPay = workPay + overTimePay + nightTimePay + cargoLatePay;
@@ -325,6 +365,5 @@ function CalculateWorkTime() {
    Init
 ========================= */
 document.getElementById("defaultOpen").click();
-
-// ✅ AUTO LOAD on startup
 loadFromLocalStorage();
+loadSettingsFromLocalStorage();
